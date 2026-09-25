@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-megum: var(--font-megum-local), sans-serif;
+  --font-mechano: var(--font-mechano-local), sans-serif;
+  --font-brixela: var(--font-brixela-local), sans-serif;
+  --color-background: hsl(54 83% 2%);
+  --color-foreground: hsl(0 0% 94.5%);
+  --color-accent: #d94b2b;
+  --color-muted: hsl(0 0% 55%);
+  --color-border: hsl(54 15% 12%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-inter-local), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.font-mechano {
+  text-transform: uppercase;
+}
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+a {
+  touch-action: manipulation;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: default;
+}
+a,
+button {
+  transition:
+    color 0.3s,
+    opacity 0.3s,
+    border-color 0.3s;
+}
+:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 5px;
+}
+::selection {
+  color: #0b0a01;
+  background: var(--color-accent);
+}
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+.hud-scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgb(255 255 255 / 0.015) 2px,
+    rgb(255 255 255 / 0.015) 4px
+  );
+}
+.rec-dot {
+  animation: blink 1.2s ease-in-out infinite;
+}
+.accent-button {
+  position: relative;
+  display: inline-block;
+  padding: 1px;
+  overflow: hidden;
+}
+.accent-button::before {
+  content: "";
+  position: absolute;
+  inset: -500%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 30%,
+    color-mix(in srgb, var(--color-accent) 30%, transparent) 36%,
+    color-mix(in srgb, var(--color-accent) 40%, transparent) 40%,
+    color-mix(in srgb, var(--color-accent) 90%, transparent) 44%,
+    transparent 50%,
+    transparent 80%,
+    color-mix(in srgb, var(--color-accent) 30%, transparent) 86%,
+    color-mix(in srgb, var(--color-accent) 85%, white) 90%,
+    color-mix(in srgb, var(--color-accent) 90%, transparent) 94%,
+    transparent 100%
+  );
+  animation: spin 4s linear infinite;
+}
+.accent-button > span {
+  position: relative;
+  display: block;
+  background: var(--color-background);
+  padding: 12px 32px;
+  font-family: var(--font-mechano);
+  font-size: 10px;
+  letter-spacing: 0.7em;
+  text-transform: uppercase;
+}
+.accent-button:hover {
+  opacity: 0.8;
+}
+.partner-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+.partners:hover .partner-track {
+  animation-play-state: paused;
+}
+.modal-backdrop {
+  backdrop-filter: blur(40px);
+}
+.contact-dialog {
+  max-height: 85dvh;
+  overflow-y: auto;
+  background: #0b0a01e6;
+}
+.splash-glyph {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--color-accent) 50%, black),
+    var(--color-accent),
+    color-mix(in srgb, var(--color-accent) 50%, black)
+  );
+  background-size: 250% 100%;
+  mask: url("/images/askari-glyph-white.gif") center / contain no-repeat;
+  animation: sweep 1.4s ease-in-out infinite;
+}
+@keyframes sweep {
+  to {
+    background-position: 250% 0;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: 767px) {
+  .accent-button > span {
+    padding: 12px 24px;
+    font-size: 9px;
+  }
+  .modal-backdrop {
+    backdrop-filter: none;
+  }
+  .contact-dialog {
+    border-radius: 12px 12px 0 0;
+    background: var(--color-background);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
