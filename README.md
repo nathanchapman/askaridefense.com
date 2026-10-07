@@ -11,6 +11,8 @@ bun run dev
 
 Open [localhost:3000](http://localhost:3000). The install command includes native packages for both Apple Silicon and Rosetta when Bun and Node use different architectures.
 
+For LAN testing, open the Network URL printed by the development server on a device connected to the same network. The development config allows this machine's current IPv4 addresses to access Next.js dev resources, including hot reload. Restart the server after switching networks or changing IP addresses. Conductor uses its assigned port in the Network URL.
+
 Run validation with:
 
 ```sh
